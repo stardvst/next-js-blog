@@ -1,9 +1,17 @@
-import Head from "next/head";
-import Layout, { siteTitle } from "../components/layout";
-import utilStyles from "../styles/utils.module.css";
-import { getSortedPostsData } from "../lib/posts";
-import Link from "next/link";
-import Date from "../components/date";
+import Head from 'next/head';
+import Layout, { siteTitle } from '../components/layout';
+import { getSortedPostsData } from '../lib/posts';
+import Link from 'next/link';
+import Date from '../components/date';
+import {
+  Box,
+  Heading,
+  ListItem,
+  Text,
+  UnorderedList,
+  VStack,
+} from '@chakra-ui/react';
+import { Link as ChakraLink } from '@chakra-ui/react';
 
 export default function Home({ allPostsData }) {
   return (
@@ -11,30 +19,42 @@ export default function Home({ allPostsData }) {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <section className={utilStyles.headingMd}>
-        <p>[Your Self Introduction]</p>
-        <p>
-          (This is a sample website - you’ll be building a site like this on{" "}
-          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
-        </p>
-      </section>
+      <VStack
+        fontSize="1.2rem"
+        spacing="6"
+        alignItems="flex-start"
+        mt="1rem"
+        mb="2.5rem"
+      >
+        <Text>[Your Self Introduction]</Text>
+        <Text>
+          (This is a sample website - you’ll be building a site like this on{' '}
+          <ChakraLink color="#0070f3" isExtenal href="https://nextjs.org/learn">
+            our Next.js tutorial
+          </ChakraLink>
+          .)
+        </Text>
+      </VStack>
 
-      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
-        <ul className={utilStyles.list}>
+      <Box>
+        <Heading as="h2" fontSize="1.5rem" lineHeight="8" m="1rem 0">
+          Blog
+        </Heading>
+        <UnorderedList listStyleType="none" m="0" p="0">
           {allPostsData.map(({ id, date, title }) => (
-            <li className={utilStyles.listItem} key={id}>
-              <Link href={`/posts/${id}`}>
-                <a>{title}</a>
+            <ListItem m="0 0 1.25rem" fontSize="1.1rem">
+              <Link href={`/posts/${id}`} passHref>
+                <ChakraLink variant="ghost" color="#0070f3">
+                  {title}
+                </ChakraLink>
               </Link>
-              <br />
-              <small className={utilStyles.lightText}>
+              <Text textColor="#666">
                 <Date dateString={date} />
-              </small>
-            </li>
+              </Text>
+            </ListItem>
           ))}
-        </ul>
-      </section>
+        </UnorderedList>
+      </Box>
     </Layout>
   );
 }

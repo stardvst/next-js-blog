@@ -1,8 +1,8 @@
-import Layout from "../../components/layout";
-import { getAllPostIds, getPostData } from "../../lib/posts";
-import Head from "next/head";
-import Date from "../../components/date";
-import utilStyles from "../../styles/utils.module.css";
+import Layout from '../../components/layout';
+import { getAllPostIds, getPostData } from '../../lib/posts';
+import Head from 'next/head';
+import Date from '../../components/date';
+import { Box, Heading, Text } from '@chakra-ui/react';
 
 export default function Post({ postData }) {
   return (
@@ -10,13 +10,22 @@ export default function Post({ postData }) {
       <Head>
         <title>{postData.title}</title>
       </Head>
-      <article>
-        <h1 className={utilStyles.headingXl}>{postData.title}</h1>
-        <div className={utilStyles.lightText}>
+      <Box>
+        <Heading
+          as="h1"
+          fontSize="2rem"
+          lineHeight="10"
+          fontWeight="900"
+          letterSpacing="-0.05rem"
+          mt="1rem"
+        >
+          {postData.title}
+        </Heading>
+        <Text textColor="#666" m="1rem 0">
           <Date dateString={postData.date} />
-        </div>
-        <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
-      </article>
+        </Text>
+        <Box dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+      </Box>
     </Layout>
   );
 }
@@ -37,4 +46,3 @@ export async function getStaticProps({ params }) {
     },
   };
 }
-

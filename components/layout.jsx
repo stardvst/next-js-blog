@@ -1,15 +1,15 @@
-import Head from "next/head";
-import Image from "next/image";
-import styles from "./layout.module.css";
-import utilStyles from "../styles/utils.module.css";
-import Link from "next/link";
+import { Box, Container, Flex, Heading } from '@chakra-ui/react';
+import Head from 'next/head';
+import Link from 'next/link';
+import { Link as ChakraLink } from '@chakra-ui/react';
+import Image from './image';
 
-const name = "Your Name";
-export const siteTitle = "Next.js Sample Website";
+const name = 'Your Name';
+export const siteTitle = 'Next.js Sample Website';
 
 export default function Layout({ children, home }) {
   return (
-    <div className={styles.container}>
+    <Container m="3rem auto 6rem" p="3rem auto 6rem">
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -25,49 +25,54 @@ export default function Layout({ children, home }) {
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header className={styles.header}>
+      <Flex as="header" flexDir="column" align="center">
         {home ? (
           <>
             <Image
-              priority
               src="/images/profile.jpg"
-              className={utilStyles.borderCircle}
               height={144}
               width={144}
               alt={name}
+              rounded="full"
             />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
+            <Heading
+              as="h1"
+              fontSize="2.5rem"
+              lineHeight="1.2"
+              fontWeight="900"
+              letterSpacing="-0.05rem"
+              m="1rem 0"
+            >
+              {name}
+            </Heading>
           </>
         ) : (
           <>
-            <Link href="/">
-              <a>
-                <Image
-                  priority
-                  src="/images/profile.jpg"
-                  className={utilStyles.borderCircle}
-                  height={108}
-                  width={108}
-                  alt={name}
-                />
-              </a>
-            </Link>
-            <h2 className={utilStyles.headingLg}>
-              <Link href="/">
-                <a className={utilStyles.colorInherit}>{name}</a>
+            <Image
+              src="/images/profile.jpg"
+              height={108}
+              width={108}
+              alt={name}
+              rounded="full"
+            />
+            <Heading as="h2" fontSize="1.5rem" lineHeight="1.4" m="1rem 0">
+              <Link href="/" passHref>
+                <ChakraLink>{name}</ChakraLink>
               </Link>
-            </h2>
+            </Heading>
           </>
         )}
-      </header>
-      <main>{children}</main>
+      </Flex>
+
+      <Box>{children}</Box>
+
       {!home && (
-        <div className={styles.backToHome}>
+        <Box m="3rem 0 0">
           <Link href="/">
-            <a>← Back to home</a>
+            <ChakraLink color="#0070f3">← Back to home</ChakraLink>
           </Link>
-        </div>
+        </Box>
       )}
-    </div>
+    </Container>
   );
 }
